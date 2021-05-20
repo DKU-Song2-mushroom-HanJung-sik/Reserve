@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="movie_list">
+        <item>해리포터와 불의 잔</item>
+        <item>분노의 질주</item>
+        <item>라라랜드</item>
+    </string-array>
+
+    <string-array name="theater_list">
+        <item>1관</item>
+        <item>2관</item>
+    </string-array>
+
+    <string-array name="time_list">
+        <item>11:00</item>
+        <item>18:00</item>
+    </string-array>
+
+
+</resources>
