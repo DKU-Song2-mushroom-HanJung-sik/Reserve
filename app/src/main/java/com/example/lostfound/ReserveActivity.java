@@ -1,17 +1,13 @@
 package com.example.lostfound;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.graphics.Movie;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -29,31 +25,33 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class MovieReserve extends AppCompatActivity {
+public class ReserveActivity extends AppCompatActivity {
 
-    String TheaterID;
-    String SeatNo;
-    String ReserveMovie;
+    private String theaterId;
+    private String seatNo;
+    private String reserveMovie;
 
-    String MovieDate; //영화 예약 날짜
-    String MovieTime; //영화 예약 시간. 추후 2개 합쳐서 ReserveTime 됨.
+    private String MovieDate; //영화 예약 날짜
+    private String MovieTime; //영화 예약 시간. 추후 2개 합쳐서 ReserveTime 됨.
 
-    Spinner movieSpinner;
-    Spinner theaterSpinner;
-    Spinner timeSpinner;
+    private Spinner movieSpinner;
+    private Spinner theaterSpinner;
+    private Spinner timeSpinner;
 
-    Button date_click;
-    Button seat_A1;
-    Button seat_A2;
-    Button seat_A3;
-    Button seat_A4;
-    Button reserve_check;
+    private Button date_click;
+    private Button seat_A1;
+    private Button seat_A2;
+    private Button seat_A3;
+    private Button seat_A4;
 
-    EditText date;
-    EditText seat;
-    EditText check; //변수 확인 용
 
-    Calendar Cal = Calendar.getInstance();
+    private Button reserve_check;
+
+    private EditText date;
+    private EditText seat;
+    private EditText check; //변수 확인 용
+
+    private Calendar Cal = Calendar.getInstance();
 
     //날짜 선택
     DatePickerDialog.OnDateSetListener myDatePicker = new DatePickerDialog.OnDateSetListener() {
@@ -72,28 +70,30 @@ public class MovieReserve extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reserve);
 
-        movieSpinner = (Spinner)findViewById(R.id.movieSpinner);
-        theaterSpinner = (Spinner)findViewById(R.id.theaterSpinner);
-        timeSpinner = (Spinner)findViewById(R.id.timeSpinner);
+        movieSpinner = findViewById(R.id.movieSpinner);
+        theaterSpinner = findViewById(R.id.theaterSpinner);
+        timeSpinner = findViewById(R.id.timeSpinner);
 
-        date_click = (Button) findViewById(R.id.date_click);
-        seat_A1 = (Button) findViewById(R.id.seat_A1);
-        seat_A2 = (Button) findViewById(R.id.seat_A2);
-        seat_A3 = (Button) findViewById(R.id.seat_A3);
-        seat_A4 = (Button) findViewById(R.id.seat_A4);
-        reserve_check = (Button) findViewById(R.id.reserve_check);
+        date_click = findViewById(R.id.date_click);
+        seat_A1 = findViewById(R.id.seat_A1);
+        seat_A2 = findViewById(R.id.seat_A2);
+        seat_A3 = findViewById(R.id.seat_A3);
+        seat_A4 = findViewById(R.id.seat_A4);
 
-        date = (EditText) findViewById(R.id.date);
-        seat = (EditText) findViewById(R.id.seat);
-        check = (EditText) findViewById(R.id.check);
+
+        reserve_check = findViewById(R.id.reserve_check);
+
+        date = findViewById(R.id.date);
+        seat = findViewById(R.id.seat);
+        check = findViewById(R.id.check);
 
         //영화 선택
         movieSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0) { ReserveMovie = "해리포터와 불의 잔"; }
-                else if (position == 1) { ReserveMovie = "분노의 질주"; }
-                else { ReserveMovie = "라라랜드"; }
+                if (position == 0) { reserveMovie = "Harry Potter"; }
+                else if (position == 1) { reserveMovie = "The Fast and the Furious"; }
+                else { reserveMovie = "LaLaLand"; }
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {}
@@ -103,8 +103,8 @@ public class MovieReserve extends AppCompatActivity {
         theaterSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0) { TheaterID = "1"; }
-                else { TheaterID = "2"; }
+                if (position == 0) { theaterId = "1"; }
+                else { theaterId = "2"; }
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {}
@@ -125,7 +125,7 @@ public class MovieReserve extends AppCompatActivity {
         date_click.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DatePickerDialog(MovieReserve.this, myDatePicker, Cal.get(Calendar.YEAR),
+                new DatePickerDialog(ReserveActivity.this, myDatePicker, Cal.get(Calendar.YEAR),
                         Cal.get(Calendar.MONTH), Cal.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
@@ -135,7 +135,7 @@ public class MovieReserve extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 seat.setText("A1");
-                SeatNo = "1";
+                seatNo = "1";
             }
         });
 
@@ -143,7 +143,7 @@ public class MovieReserve extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 seat.setText("A2");
-                SeatNo = "2";
+                seatNo = "2";
             }
         });
 
@@ -151,7 +151,7 @@ public class MovieReserve extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 seat.setText("A3");
-                SeatNo = "3";
+                seatNo = "3";
             }
         });
 
@@ -159,20 +159,22 @@ public class MovieReserve extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 seat.setText("A4");
-                SeatNo = "4";
+                seatNo = "4";
             }
         });
 
         //예약하기 버튼
         reserve_check.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
 
-                String CustomerID = "1111";
-                String ReserveTime = MovieDate + " " + MovieTime;
-                String ReserveID = CustomerID + TheaterID + SeatNo;
+                String customerId = ((MainActivity)MainActivity.context_main).customerId;
+                String reserveTime = MovieDate + " " + MovieTime;
+                String reserveId = customerId + theaterId + seatNo;
 
-                check.setText(ReserveID + " " + CustomerID + " " + TheaterID + " " + SeatNo + " " + ReserveTime + " " + ReserveMovie);
+
+                //확인용. 나중엔 아예 없애고 그냥 공백으로 할 예정.
+                check.setText(reserveId + " " + customerId + " " + theaterId + " " + seatNo + " " + reserveTime + " " + reserveMovie);
 
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
@@ -182,10 +184,8 @@ public class MovieReserve extends AppCompatActivity {
                             boolean success = jsonObject.getBoolean("success");
                             if (success) {
                                 Toast.makeText(getApplicationContext(), "좌석 예약에 성공하였습니다.", Toast.LENGTH_SHORT).show();
-                                /*
-                                Intent intent = new Intent(MovieReserve.this, MainActivity.class);
+                                Intent intent = new Intent(ReserveActivity.this, MypageActivity.class);
                                 startActivity(intent);
-                                 */
                             } else {
                                 Toast.makeText(getApplicationContext(), "좌석 예약에 실패하였습니다.", Toast.LENGTH_SHORT).show();
                                 return;
@@ -196,8 +196,8 @@ public class MovieReserve extends AppCompatActivity {
                     }
                 };
 
-                ReserveRequest reserveRequest = new ReserveRequest(ReserveID, CustomerID, TheaterID, SeatNo, ReserveTime, ReserveMovie, responseListener);
-                RequestQueue queue = Volley.newRequestQueue(MovieReserve.this);
+                ReserveRequest reserveRequest = new ReserveRequest(reserveId, customerId, theaterId, seatNo, reserveTime, reserveMovie, responseListener);
+                RequestQueue queue = Volley.newRequestQueue(ReserveActivity.this);
                 queue.add(reserveRequest);
             }
         });
