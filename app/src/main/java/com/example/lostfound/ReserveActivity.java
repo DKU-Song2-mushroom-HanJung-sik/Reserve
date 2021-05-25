@@ -170,11 +170,10 @@ public class ReserveActivity extends AppCompatActivity {
 
                 String customerId = ((MainActivity)MainActivity.context_main).customerId;
                 String reserveTime = MovieDate + " " + MovieTime;
-                String reserveId = customerId + theaterId + seatNo;
 
 
                 //확인용. 나중엔 아예 없애고 그냥 공백으로 할 예정.
-                check.setText(reserveId + " " + customerId + " " + theaterId + " " + seatNo + " " + reserveTime + " " + reserveMovie);
+                check.setText(customerId + " " + theaterId + " " + seatNo + " " + reserveTime + " " + reserveMovie);
 
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
@@ -196,7 +195,7 @@ public class ReserveActivity extends AppCompatActivity {
                     }
                 };
 
-                ReserveRequest reserveRequest = new ReserveRequest(reserveId, customerId, theaterId, seatNo, reserveTime, reserveMovie, responseListener);
+                ReserveRequest reserveRequest = new ReserveRequest(customerId, theaterId, seatNo, reserveTime, reserveMovie, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(ReserveActivity.this);
                 queue.add(reserveRequest);
             }
