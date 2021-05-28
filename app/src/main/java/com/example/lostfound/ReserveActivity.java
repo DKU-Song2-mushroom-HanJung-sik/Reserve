@@ -183,9 +183,12 @@ public class ReserveActivity extends AppCompatActivity {
                             boolean success = jsonObject.getBoolean("success");
                             if (success) {
                                 Toast.makeText(getApplicationContext(), "좌석 예약에 성공하였습니다.", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(ReserveActivity.this, MypageActivity.class);
-                                //intent.putExtra("", );
-                                //intent.putExtra("", );
+                                Intent intent = new Intent(ReserveActivity.this, MyReservationActivity.class);
+
+                                intent.putExtra("reserveMovie", reserveMovie);
+                                intent.putExtra("theaterId", theaterId);
+                                intent.putExtra("seatNo", seatNo);
+                                intent.putExtra("reserveTime", reserveTime);
 
                                 startActivity(intent);
                             } else {

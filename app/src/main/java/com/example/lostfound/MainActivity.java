@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         move_reserve = (Button) findViewById(R.id.move_reserve);
         move_myinfo = (Button) findViewById(R.id.move_myinfo);
 
-
 /*
         image_harry = (ImageButton) findViewById(R.id.image_harry);
         image_run = (ImageButton) findViewById(R.id.image_run);

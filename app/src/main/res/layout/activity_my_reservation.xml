@@ -31,8 +31,263 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="15dp" />
+            android:layout_height="30dp" />
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/widelogo" />
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical"
+            android:layout_gravity="center">
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="15dp"/>
+
+            <EditText
+                android:id="@+id/reserveName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@android:color/transparent"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                />
+
+            <EditText
+                android:id="@+id/reserveContact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@android:color/transparent"
+                android:textSize="15sp"
+                />
+
+        </LinearLayout>
+        <Space
+            android:layout_width="60dp"
+            android:layout_height="20dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <Space
+                android:layout_width="20dp"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/moveMyinfo"
+                android:layout_width="370dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/colorPrimary1"
+                android:textColor="@color/black"
+                android:text="나의 시네마"
+
+                />
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="35dp" />
+
+
+        <LinearLayout
+            android:layout_width="375dp"
+            android:layout_height="300dp"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:background="#EFEEEE">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="현재 예약 정보"
+
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+            <Space
+                android:orientation="horizontal"
+                android:layout_width="10dp"
+                android:layout_height="10dp" />
+
+            <Space
+                android:layout_width="20dp"
+                android:layout_height="10dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <Space
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_baseline_check_circle_24"
+                android:drawableLeft="@drawable/ic_baseline_check_circle_24"
+                android:text="  영화 제목"
+                android:padding="5dp"
+
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+                <Space
+                    android:layout_width="25dp"
+                    android:layout_height="match_parent" />
+                <EditText
+                    android:id="@+id/set_movie"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:hint="분노의 질주"
+                    />
+            </LinearLayout>
+
+            <Space
+                android:layout_width="20dp"
+                android:layout_height="10dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <Space
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_baseline_check_circle_24"
+                android:drawableLeft="@drawable/ic_baseline_check_circle_24"
+                android:text="  상영 극장"
+                android:padding="5dp"
+
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+                <Space
+                    android:layout_width="25dp"
+                    android:layout_height="match_parent" />
+                <EditText
+                    android:id="@+id/set_theater"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:hint="1관"
+                    />
+            </LinearLayout>
+
+            <Space
+                android:layout_width="20dp"
+                android:layout_height="10dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <Space
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_baseline_check_circle_24"
+                android:drawableLeft="@drawable/ic_baseline_check_circle_24"
+                android:text="  좌석 번호"
+                android:padding="5dp"
+
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+                <Space
+                    android:layout_width="25dp"
+                    android:layout_height="match_parent" />
+                <EditText
+                    android:id="@+id/set_seat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:hint="A1"
+                    />
+            </LinearLayout>
+
+            <Space
+                android:layout_width="20dp"
+                android:layout_height="10dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <Space
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_baseline_check_circle_24"
+                android:drawableLeft="@drawable/ic_baseline_check_circle_24"
+                android:text="  예약 시간"
+                android:padding="5dp"
+
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+                <Space
+                    android:layout_width="25dp"
+                    android:layout_height="match_parent" />
+                <EditText
+                    android:id="@+id/set_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:hint="2021-05-31 18:00:00"
+                    />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="20dp"
+                android:layout_height="10dp" />
+
+
+            <Space
+                android:layout_width="20dp"
+                android:layout_height="10dp" />
+        </LinearLayout>
+
+
     </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
