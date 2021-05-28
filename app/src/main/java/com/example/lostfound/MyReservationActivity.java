@@ -2,6 +2,7 @@ package com.example.lostfound;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -18,13 +19,23 @@ import android.os.Bundle;
 import android.content.Intent;
 
 public class MyReservationActivity extends AppCompatActivity {
+    public static Context context_myReservation;
+
     private Button moveMyinfo;
     private EditText reserveName, reserveContact;
-    private EditText set_num, set_movie, set_theater, set_seat, set_time;
+    private EditText set_movie, set_theater, set_seat, set_time;
+
 
     public String customerContact=((MainActivity)MainActivity.context_main).customerContact;
     public String customerName=((MainActivity)MainActivity.context_main).customerName;
-    public String reserveMovie, theaterId, seatNo, reserveTime, reserveId;
+
+
+    public String movieName;
+    public String theaId;
+    public String seatNum;
+    public String movieTime;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,29 +46,41 @@ public class MyReservationActivity extends AppCompatActivity {
 
         reserveName = (EditText) findViewById(R.id.reserveName);
         reserveContact = (EditText) findViewById(R.id.reserveContact);
-        set_num = (EditText) findViewById(R.id.set_num);
+
         set_movie = (EditText) findViewById(R.id.set_movie);
         set_theater = (EditText) findViewById(R.id.set_theater);
         set_seat = (EditText) findViewById(R.id.set_seat);
         set_time = (EditText) findViewById(R.id.set_time);
 
+        Intent intent = getIntent();
+        movieName = intent.getStringExtra("reserveMovie");
+        theaId = intent.getStringExtra("theaterId");
+        seatNum = intent.getStringExtra("seatNo");
+        movieTime = intent.getStringExtra("reserveTime");
+
+
         reserveName.setText(customerName + "님의 예약정보입니다!");
         reserveContact.setText("(H.P : " + customerContact + ")");
-        reserveName.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11);
-        reserveContact.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11);
+        reserveName.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+        reserveContact.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
 
-        Intent intent = getIntent();
-        reserveMovie = intent.getStringExtra("reserveMovie");
-        theaterId = intent.getStringExtra("theaterId");
-        seatNo = intent.getStringExtra("seatNo");
-        reserveTime = intent.getStringExtra("reserveTime");
-        reserveId = intent.getStringExtra("reserveId");
+        set_movie.setText(movieName);
+        set_theater.setText(theaId + "관");
+        set_seat.setText("A" + seatNum);
+        set_time.setText(movieTime);
 
-        set_movie.setText(reserveMovie);
-        set_theater.setText(theaterId);
-        set_seat.setText(seatNo);
-        set_time.setText(reserveTime);
-        set_num.setText(reserveId);
 
+
+
+
+
+        // 나의 시네마 버튼 클릭
+        moveMyinfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MyReservationActivity.this, MypageActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

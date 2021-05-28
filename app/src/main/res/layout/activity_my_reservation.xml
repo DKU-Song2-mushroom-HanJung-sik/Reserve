@@ -106,7 +106,7 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="35dp" />
+            android:layout_height="50dp" />
 
 
         <LinearLayout
@@ -152,6 +152,7 @@
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_baseline_check_circle_24"
                 android:drawableLeft="@drawable/ic_baseline_check_circle_24"
+                android:layout_marginTop="5dp"
                 android:text="  영화 제목"
                 android:padding="5dp"
 
@@ -188,6 +189,7 @@
                 android:drawableStart="@drawable/ic_baseline_check_circle_24"
                 android:drawableLeft="@drawable/ic_baseline_check_circle_24"
                 android:text="  상영 극장"
+                android:layout_marginTop="5dp"
                 android:padding="5dp"
 
                 android:textColor="@color/black"
@@ -222,6 +224,7 @@
                 android:drawableStart="@drawable/ic_baseline_check_circle_24"
                 android:drawableLeft="@drawable/ic_baseline_check_circle_24"
                 android:text="  좌석 번호"
+                android:layout_marginTop="5dp"
                 android:padding="5dp"
 
                 android:textColor="@color/black"
@@ -257,6 +260,7 @@
                 android:drawableStart="@drawable/ic_baseline_check_circle_24"
                 android:drawableLeft="@drawable/ic_baseline_check_circle_24"
                 android:text="  예약 시간"
+                android:layout_marginTop="5dp"
                 android:padding="5dp"
 
                 android:textColor="@color/black"

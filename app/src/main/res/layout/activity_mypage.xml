@@ -199,7 +199,7 @@
                 android:layout_height="wrap_content" />
 
             <Button
-                android:id="@+id/reserveCheck"
+                android:id="@+id/reserveInfo"
                 android:layout_width="110dp"
                 android:layout_height="50dp"
 

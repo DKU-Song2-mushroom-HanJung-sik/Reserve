@@ -5,5 +5,202 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MyLostActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="vertical"
+            android:background="@color/colorPrimary">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="15dp"
+                android:text="분실물 정보"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="30dp" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
+
+        <EditText
+            android:id="@+id/set_movie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:hint="분노의 질주"
+            />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Space
+                android:layout_width="100dp"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:padding="5dp"
+                android:text="Dankook Cinema"
+
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+            <Space
+                android:layout_width="25dp"
+                android:layout_height="match_parent" />
+
+            <EditText
+                android:id="@+id/set_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:hint="1관"
+                android:textStyle="bold"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Space
+                android:layout_width="80dp"
+                android:layout_height="match_parent" />
+
+            <EditText
+                android:id="@+id/set_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@color/black"
+                android:textSize="25sp"
+                android:hint="2021-05-31 18:00:00"
+                android:textStyle="bold"
+                />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="60dp" />
+
+        <LinearLayout
+            android:layout_width="270dp"
+            android:layout_height="160dp"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:background="#EFEEEE">
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center">
+
+                <Space
+                    android:layout_width="110dp"
+                    android:layout_height="20dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SCREEN"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center">
+
+                <Space
+                    android:layout_width="55dp"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/seatA1"
+                    android:layout_width="60dp"
+                    android:layout_height="40dp"
+                    android:text="A1"
+                    android:backgroundTint="#B61818"/>
+
+                <Space
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"/>
+                <Button
+                    android:id="@+id/seatA2"
+                    android:layout_width="60dp"
+                    android:layout_height="40dp"
+                    android:text="A2"
+                    android:backgroundTint="#B61818"/>
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp" />
+            </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center">
+
+                    <Space
+                        android:layout_width="55dp"
+                        android:layout_height="wrap_content" />
+
+                    <Button
+                        android:id="@+id/seatA3"
+                        android:layout_width="60dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="10dp"
+                        android:text="A3"
+                        android:backgroundTint="#B61818"/>
+
+                    <Space
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"/>
+                    <Button
+                        android:id="@+id/seatA4"
+                        android:layout_width="60dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="10dp"
+                        android:text="A4"
+                        android:backgroundTint="#B61818"/>
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

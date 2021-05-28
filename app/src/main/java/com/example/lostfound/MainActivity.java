@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     break;
                 }
 
-            // 상단 내정보 클릭시
+            // 상단 나의 시네마 클릭시
             case R.id.move_myinfo:
                 if (customerId != null){
                     Intent intent_info = new Intent(this, MypageActivity.class);
