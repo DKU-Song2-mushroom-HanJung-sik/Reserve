@@ -7,11 +7,42 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import android.widget.TextView;
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
+import android.util.Log;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import android.os.Bundle;
+import java.io.BufferedReader;
+
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+
 
 public class MyLostActivity extends AppCompatActivity {
+
+    private static String TAG = "lostDetail_MyLostActivity";
+
+    private static final String TAG_JSON="lostDetail";
+    private static final String TAG_LOSTID="lostDetailId";
+    private static final String TAG_THEATERID="theaterID";
+    private static final String TAG_SEATNO="seatNo";
+    private static final String TAG_DETTIME="detectTime";
+
+    private TextView mTextViewReseult;
+    ArrayList<HashMap<String, String>> mArrayList;
+    ListView mlistView;
+    String mJsonString;
 
     public String movieName=((MypageActivity)MypageActivity.context_myPage).movieName;
     public String movieTheater=((MypageActivity)MypageActivity.context_myPage).theaId;
@@ -27,6 +58,13 @@ public class MyLostActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_lost);
+
+        mTextViewReseult = (TextView) findViewById(R.id.textView_lost_result);
+        mlistView = (ListView) findViewById(R.id.listView_lost_list);
+        mArrayList = new ArrayList<>();
+
+        //GetData task = new GetData();
+        //task.execute("http://172.23.14.54/loadDBtoJson.php");
 
         seatA1 = (Button) findViewById(R.id.seatA1);
         seatA2 = (Button) findViewById(R.id.seatA2);
@@ -97,5 +135,10 @@ public class MyLostActivity extends AppCompatActivity {
         *   boolean isFound;
         *   return found;
         * */
+
+
     }
+
+
+
 }
