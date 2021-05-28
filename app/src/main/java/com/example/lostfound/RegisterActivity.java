@@ -2,6 +2,7 @@ package com.example.lostfound;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -17,15 +18,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class RegisterActivity extends AppCompatActivity {
-
+    public static Context context_register;
     private EditText et_id, et_name, et_contact;
     private Button btn_register;
-
+    public String customerName, customerId, customerContact;
     @Override
     protected void onCreate(Bundle savedInstanceState) {    // 액티비티 시작시 처음으로 실행
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        context_register = this;
         // 아이디값 찾아주기
         et_id = findViewById(R.id.et_id);
         et_name = findViewById(R.id.et_name);
@@ -36,10 +38,11 @@ public class RegisterActivity extends AppCompatActivity {
         btn_register.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+
                 //EditText에 현재 입력된 값 가져옴
-                String customerId = et_id.getText().toString();
-                String customerName = et_name.getText().toString();
-                String customerContact = et_contact.getText().toString();
+                customerId = et_id.getText().toString();
+                customerName = et_name.getText().toString();
+                customerContact = et_contact.getText().toString();
 
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override

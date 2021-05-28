@@ -44,6 +44,7 @@ public class LoginActivity extends AppCompatActivity {
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // 사용자 입력값, EditText(et_id, et_contact)에 현재 입력된 값을 가져옴.
                 String customerId = et_id.getText().toString();
                 String customerContact = et_contact.getText().toString();
 
@@ -58,11 +59,12 @@ public class LoginActivity extends AppCompatActivity {
                             if (success) { // 로그인에 성공한 경우
                                 String customerId = jsonObject.getString("customerId");
                                 String customerContact = jsonObject.getString("customerContact");
-
-                                Toast.makeText(getApplicationContext(), "로그인에 성공하였습니다.", Toast.LENGTH_SHORT).show();
+                                String customerName = jsonObject.getString("customerName");
+                                Toast.makeText(getApplicationContext(),"로그인에 성공하였습니다.",Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 intent.putExtra("customerId", customerId);
                                 intent.putExtra("customerContact", customerContact);
+                                intent.putExtra("customerName", customerName);
                                 startActivity(intent);
                             } else { // 로그인에 실패한 경우
                                 Toast.makeText(getApplicationContext(), "로그인에 실패하였습니다.", Toast.LENGTH_SHORT).show();

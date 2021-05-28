@@ -184,6 +184,9 @@ public class ReserveActivity extends AppCompatActivity {
                             if (success) {
                                 Toast.makeText(getApplicationContext(), "좌석 예약에 성공하였습니다.", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(ReserveActivity.this, MypageActivity.class);
+                                //intent.putExtra("", );
+                                //intent.putExtra("", );
+
                                 startActivity(intent);
                             } else {
                                 Toast.makeText(getApplicationContext(), "좌석 예약에 실패하였습니다.", Toast.LENGTH_SHORT).show();

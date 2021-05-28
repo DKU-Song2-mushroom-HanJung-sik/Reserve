@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     Button move_login;
     Button move_reserve;
-    //Button move_lostfound;
+    Button move_myinfo;
 
     EditText identity_name, identity_contact;
 
@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public String customerId;
     public String customerContact;
-
+    public String customerName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         move_login = (Button) findViewById(R.id.move_login);
         move_reserve = (Button) findViewById(R.id.move_reserve);
-        //move_reserve = (Button) findViewById(R.id.move_lostfound);
+        move_myinfo = (Button) findViewById(R.id.move_myinfo);
 
 
 /*
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 */
         move_reserve.setOnClickListener(this);
         move_login.setOnClickListener(this);
-
+        move_myinfo.setOnClickListener(this);
 
         identity_name = (EditText) findViewById(R.id.identity_name);
         identity_contact = (EditText) findViewById(R.id.identity_contact);
@@ -60,11 +60,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent intent = getIntent();
         customerId = intent.getStringExtra("customerId");
         customerContact = intent.getStringExtra("customerContact");
+        customerName = intent.getStringExtra("customerName");
 
-        if (customerId != null && customerContact != null){
-            identity_name.setText(customerId + " 님, 안녕하세요!");
+        if (customerName != null && customerContact != null){
+
+            identity_name.setText(customerName + " 님, 안녕하세요!");
             identity_contact.setText("(H.P : " + customerContact + ")");
-            identity_name.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
+            identity_name.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11);
             identity_contact.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11);
         }
 
@@ -72,15 +74,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void onClick(View v) {
         switch (v.getId()) {
+            // 상단 로그인 버튼 클릭시
             case R.id.move_login:
                 Intent intent_log = new Intent(this, LoginActivity.class);
                 startActivity(intent_log);
                 break;
 
+            // 상단 예매 버튼 클릭시
             case R.id.move_reserve:
 
                 if (customerId != null){
                     Intent intent_res = new Intent(this, ReserveActivity.class);
+                    intent_res.putExtra("customerId", customerId);
+                    intent_res.putExtra("customerContact", customerContact);
                     startActivity(intent_res);
                     break;
                 }
@@ -89,9 +95,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     startActivity(intent_loglog);
                     break;
                 }
-            //case R.id.move_lostfound:
 
-
+            // 상단 내정보 클릭시
+            case R.id.move_myinfo:
+                if (customerId != null){
+                    Intent intent_info = new Intent(this, MypageActivity.class);
+                    startActivity(intent_info);
+                    break;
+                }
+                else{
+                    Intent intent_login = new Intent(this, LoginActivity.class);
+                    startActivity(intent_login);
+                    break;
+                }
         }
     }
 }
