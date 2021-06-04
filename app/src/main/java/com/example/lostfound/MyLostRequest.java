@@ -6,18 +6,17 @@ import com.android.volley.toolbox.StringRequest;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LoginRequest extends StringRequest {
+public class MyLostRequest extends StringRequest {
 
     //서버 URL 설정( PHP 파일 연동)
-    final static private String URL = "http://192.168.25.53/login.php";
+    final static private String URL = "http://192.168.25.53/updateLost.php";
     private Map<String, String> map;
 
-    public LoginRequest(String customerId, String customerContact, Response.Listener<String> listener) {
+    public MyLostRequest(String LostId, Response.Listener<String> listener) {
         super(Method.POST, URL, listener, null);
 
         map = new HashMap<>();
-        map.put("customerId",customerId);
-        map.put("customerContact", customerContact);
+        map.put("lostDetailId",LostId);
     }
     @Override
     protected Map<String, String> getParams() throws AuthFailureError {

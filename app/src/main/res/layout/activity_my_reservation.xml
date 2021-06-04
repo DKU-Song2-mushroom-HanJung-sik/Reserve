@@ -169,6 +169,7 @@
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:hint="분노의 질주"
+                    android:background="@android:color/transparent"
                     />
             </LinearLayout>
 
@@ -205,6 +206,7 @@
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:hint="1관"
+                    android:background="@android:color/transparent"
                     />
             </LinearLayout>
 
@@ -240,6 +242,7 @@
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:hint="A1"
+                    android:background="@android:color/transparent"
                     />
             </LinearLayout>
 
@@ -276,6 +279,7 @@
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:hint="2021-05-31 18:00:00"
+                    android:background="@android:color/transparent"
                     />
 
             </LinearLayout>

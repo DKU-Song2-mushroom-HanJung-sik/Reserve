@@ -1,10 +1,15 @@
 package com.example.lostfound;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 import android.widget.TextView;
 import android.app.ProgressDialog;
@@ -13,6 +18,10 @@ import android.util.Log;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,28 +39,34 @@ import java.util.HashMap;
 
 
 public class MyLostActivity extends AppCompatActivity {
+    public static Context context_main;
 
     private static String TAG = "lostDetail_MyLostActivity";
 
     private static final String TAG_JSON="lostDetail";
     private static final String TAG_LOSTID="lostDetailId";
-    private static final String TAG_THEATERID="theaterID";
+    private static final String TAG_THEATERID="theaterId";
     private static final String TAG_SEATNO="seatNo";
     private static final String TAG_DETTIME="detectTime";
+    private static final String TAG_ISLOST="isLost";
 
-    private TextView mTextViewReseult;
+    public String IsLost;
+    public String LostId;
+
     ArrayList<HashMap<String, String>> mArrayList;
     ListView mlistView;
     String mJsonString;
 
+    /*
     public String movieName=((MypageActivity)MypageActivity.context_myPage).movieName;
     public String movieTheater=((MypageActivity)MypageActivity.context_myPage).theaId;
     public String movieTime = ((MypageActivity)MypageActivity.context_myPage).movieTime;
 
 
-
-    private Button seatA1, seatA2, seatA3, seatA4;
     private EditText set_movie, set_theater, set_time;
+*/
+
+
 
 
     @Override
@@ -59,18 +74,33 @@ public class MyLostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_lost);
 
-        mTextViewReseult = (TextView) findViewById(R.id.textView_lost_result);
         mlistView = (ListView) findViewById(R.id.listView_lost_list);
         mArrayList = new ArrayList<>();
 
-        //GetData task = new GetData();
-        //task.execute("http://172.23.14.54/loadDBtoJson.php");
+        GetData task = new GetData();
+        task.execute("http://192.168.25.53/loadDBtoJson.php");
 
-        seatA1 = (Button) findViewById(R.id.seatA1);
-        seatA2 = (Button) findViewById(R.id.seatA2);
-        seatA3 = (Button) findViewById(R.id.seatA3);
-        seatA4 = (Button) findViewById(R.id.seatA4);
+        
+        
+/*
+        View.OnClickListener clickListener;
+        clickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (IsLost.equals("O")){
+                    Toast.makeText(getApplicationContext(),"이미 회수된 분실물입니다.",Toast.LENGTH_SHORT).show();
+                }
+                else{
 
+                    retrieveLost();
+                }
+            }
+        };
+*/
+
+
+
+/*
         set_movie = (EditText) findViewById(R.id.set_movie);
         set_theater = (EditText) findViewById(R.id.set_theater);
         set_time = (EditText) findViewById(R.id.set_time);
@@ -78,67 +108,176 @@ public class MyLostActivity extends AppCompatActivity {
         set_movie.setText(movieName);
         set_theater.setText(movieTheater + "관");
         set_time.setText(movieTime);
+*/
+        /*
         View.OnClickListener clickListener;
         clickListener = new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 switch(v.getId()){
                     case R.id.seatA1:
-                        // A1 좌석을 눌렀을 때의 처리
-                        // if(isLostFound())
-                        Toast.makeText(getApplicationContext(), "분실물이 탐지되었습니다", Toast.LENGTH_LONG).show();
-                        /* else
-                        Toast.makeText(getApplicationContext(), "분실물이 탐지되지 않았습니다", Toast.LENGTH_LONG).show();
-                         */
-                        break;
 
-                    case R.id.seatA2:
-                        // A2 좌석을 눌렀을 때의 처리
-                        // if(isLostFound())
-                        Toast.makeText(getApplicationContext(), "분실물이 탐지되었습니다", Toast.LENGTH_LONG).show();
-                        /* else
-                        Toast.makeText(getApplicationContext(), "분실물이 탐지되지 않았습니다", Toast.LENGTH_LONG).show();
-                         */
-                        break;
-
-                    case R.id.seatA3:
-                        // A3 좌석을 눌렀을 때의 처리
-                        // if(isLostFound())
-                        Toast.makeText(getApplicationContext(), "분실물이 탐지되었습니다", Toast.LENGTH_LONG).show();
-                        /* else
-                        Toast.makeText(getApplicationContext(), "분실물이 탐지되지 않았습니다", Toast.LENGTH_LONG).show();
-                         */
-                        break;
-
-                    case R.id.seatA4:
-                        // A4 좌석을 눌렀을 때의 처리
-                        // if(isLostFound())
-                        Toast.makeText(getApplicationContext(), "분실물이 탐지되었습니다", Toast.LENGTH_LONG).show();
-                        /* else
-                        Toast.makeText(getApplicationContext(), "분실물이 탐지되지 않았습니다", Toast.LENGTH_LONG).show();
-                         */
-                        break;
-                    default:
-                        break;
                 }
             }
         };
 
-        seatA1.setOnClickListener(clickListener);
-        seatA2.setOnClickListener(clickListener);
-        seatA3.setOnClickListener(clickListener);
-        seatA4.setOnClickListener(clickListener);
+        */
 
-        // 분실물이 탐지되었는지 확인
-        /*
-        * public boolean isLostFound(){
-        *   boolean isFound;
-        *   return found;
-        * */
+    }
+
+    private class GetData extends AsyncTask<String, Void, String>{
+        ProgressDialog progressDialog;
+        String errorString = null;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            progressDialog = ProgressDialog.show(MyLostActivity.this,
+                    "Please Wait", null, true, true);
+        }
 
 
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            progressDialog.dismiss();
+          //  mTextViewResult.setText(result);
+            Log.d(TAG, "response  - " + result);
+
+            if (result == null){
+
+             //  mTextViewResult.setText(errorString);
+            }
+            else {
+
+                mJsonString = result;
+                showResult();
+            }
+        }
+
+
+        @Override
+        protected String doInBackground(String... params) {
+            String serverURL = params[0];
+            try {
+                URL url = new URL(serverURL);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+
+                httpURLConnection.setReadTimeout(5000);
+                httpURLConnection.setConnectTimeout(5000);
+                httpURLConnection.connect();
+
+                int responseStatusCode = httpURLConnection.getResponseCode();
+                Log.d(TAG, "response code - " + responseStatusCode);
+
+                InputStream inputStream;
+                if(responseStatusCode == HttpURLConnection.HTTP_OK) {
+                    inputStream = httpURLConnection.getInputStream();
+                }
+                else{
+                    inputStream = httpURLConnection.getErrorStream();
+                }
+
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+                StringBuilder sb = new StringBuilder();
+                String line;
+
+                while((line = bufferedReader.readLine()) != null){
+                    sb.append(line);
+                }
+                bufferedReader.close();
+                return sb.toString().trim();
+
+            } catch (Exception e) {
+                Log.d(TAG, "InsertData: Error ", e);
+                errorString = e.toString();
+
+                return null;
+            }
+        }
+    }
+
+    private void showResult(){
+        try {
+            JSONObject jsonObject = new JSONObject(mJsonString);
+            JSONArray jsonArray = jsonObject.getJSONArray(TAG_JSON);
+
+            for(int i=0;i<jsonArray.length();i++){
+
+                JSONObject item = jsonArray.getJSONObject(i);
+
+                LostId = item.getString(TAG_LOSTID);
+                String TheaterId = item.getString(TAG_THEATERID) + "관";
+                String SeatNO = "A" + item.getString(TAG_SEATNO);
+                String DetTime = item.getString(TAG_DETTIME);
+                IsLost = item.getString(TAG_ISLOST);
+
+                if(IsLost.equals("0")){
+                    IsLost = "X";
+
+                }
+                else{ IsLost = "O"; }
+
+                HashMap<String,String> hashMap = new HashMap<>();
+
+                hashMap.put(TAG_LOSTID, LostId);
+                hashMap.put(TAG_THEATERID, TheaterId);
+                hashMap.put(TAG_SEATNO, SeatNO);
+                hashMap.put(TAG_DETTIME, DetTime);
+                hashMap.put(TAG_ISLOST, IsLost);
+
+                mArrayList.add(hashMap);
+            }
+
+            ListAdapter adapter = new SimpleAdapter(
+                    MyLostActivity.this, mArrayList, R.layout.item_list,
+                    new String[]{TAG_LOSTID,TAG_THEATERID, TAG_SEATNO, TAG_DETTIME, TAG_ISLOST},
+                    new int[]{R.id.textView_list_id, R.id.textView_list_theater, R.id.textView_list_seat, R.id.textView_list_detectTime, R.id.textView_list_isLost}
+            );
+
+            mlistView.setAdapter(adapter);
+
+
+
+        } catch (JSONException e) {
+            Log.d(TAG, "showResult : ", e);
+        }
     }
 
 
 
+/*
+    private void retrieveLost(){
+        Response.Listener<String> responseListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    boolean success = jsonObject.getBoolean("success");
+                    if (success) { // 회수 성공
+                        //IsLost = jsonObject.getString("IsLost");
+
+                        Toast.makeText(getApplicationContext(),"분실물을 회수하였습니다.",Toast.LENGTH_SHORT).show();
+
+                        Intent intent = new Intent(MyLostActivity.this, MyLostActivity.class);
+                        //intent.putExtra("customerId", IsLost);
+                        startActivity(intent);
+                    } else { // 로그인에 실패한 경우
+                        Toast.makeText(getApplicationContext(), "분실물 회수에 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        MyLostRequest MyLostRequest = new MyLostRequest(LostId, responseListener);
+        RequestQueue queue = Volley.newRequestQueue(MyLostActivity.this);
+        queue.add(MyLostRequest);
+    }
+*/
 }
