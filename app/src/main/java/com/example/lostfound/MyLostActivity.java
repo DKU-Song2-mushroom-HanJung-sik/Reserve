@@ -57,14 +57,6 @@ public class MyLostActivity extends AppCompatActivity {
     ListView mlistView;
     String mJsonString;
 
-    /*
-    public String movieName=((MypageActivity)MypageActivity.context_myPage).movieName;
-    public String movieTheater=((MypageActivity)MypageActivity.context_myPage).theaId;
-    public String movieTime = ((MypageActivity)MypageActivity.context_myPage).movieTime;
-
-
-    private EditText set_movie, set_theater, set_time;
-*/
 
 
 
@@ -78,7 +70,7 @@ public class MyLostActivity extends AppCompatActivity {
         mArrayList = new ArrayList<>();
 
         GetData task = new GetData();
-        task.execute("http://192.168.25.53/loadDBtoJson.php");
+        task.execute("http://220.149.236.71/loadDBtoJson.php");
 
         
         

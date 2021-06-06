@@ -19,7 +19,7 @@ import android.os.Bundle;
 import android.content.Intent;
 
 public class MyReservationActivity extends AppCompatActivity {
-    public static Context context_myReservation;
+
 
     private Button moveMyinfo;
     private EditText reserveName, reserveContact;
@@ -79,6 +79,10 @@ public class MyReservationActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MyReservationActivity.this, MypageActivity.class);
+                intent.putExtra("reserveMovie", movieName);
+                intent.putExtra("theaterId", theaId);
+                intent.putExtra("seatNo", seatNum);
+                intent.putExtra("reserveTime", movieTime);
                 startActivity(intent);
             }
         });

@@ -15,7 +15,7 @@ import org.json.JSONObject;
 
 public class MypageActivity extends AppCompatActivity {
 
-    public static Context context_myPage;
+
     private Button reserveInfo, lostCheck;
     private EditText identity_name1, identity_name2, identity_id, identity_phone;
     public String movieName, theaId, seatNum, movieTime;
@@ -57,6 +57,10 @@ public class MypageActivity extends AppCompatActivity {
             @Override
             public void onClick(View view){
                 Intent intent = new Intent(MypageActivity.this, MyReservationActivity.class);
+                intent.putExtra("reserveMovie", movieName);
+                intent.putExtra("theaterID", theaId);
+                intent.putExtra("seatNo", seatNum);
+                intent.putExtra("reserveTime", movieTime);
                 startActivity(intent);
             }
         });

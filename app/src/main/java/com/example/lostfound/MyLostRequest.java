@@ -9,7 +9,7 @@ import java.util.Map;
 public class MyLostRequest extends StringRequest {
 
     //서버 URL 설정( PHP 파일 연동)
-    final static private String URL = "http://192.168.25.53/updateLost.php";
+    final static private String URL = "http://220.149.236.71/updateLost.php";
     private Map<String, String> map;
 
     public MyLostRequest(String LostId, Response.Listener<String> listener) {
