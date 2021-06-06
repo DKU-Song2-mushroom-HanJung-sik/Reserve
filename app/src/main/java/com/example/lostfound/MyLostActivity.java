@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -50,12 +51,13 @@ public class MyLostActivity extends AppCompatActivity {
     private static final String TAG_DETTIME="detectTime";
     private static final String TAG_ISLOST="isLost";
 
-    public String IsLost;
-    public String LostId;
 
     ArrayList<HashMap<String, String>> mArrayList;
     ListView mlistView;
     String mJsonString;
+
+    EditText set_theater;
+    EditText set_movie;
 
 
 
@@ -72,26 +74,11 @@ public class MyLostActivity extends AppCompatActivity {
         GetData task = new GetData();
         task.execute("http://220.149.236.71/loadDBtoJson.php");
 
-        
-        
-/*
-        View.OnClickListener clickListener;
-        clickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (IsLost.equals("O")){
-                    Toast.makeText(getApplicationContext(),"이미 회수된 분실물입니다.",Toast.LENGTH_SHORT).show();
-                }
-                else{
-
-                    retrieveLost();
-                }
-            }
-        };
-*/
 
 
 
+        set_theater = (EditText) findViewById(R.id.set_theater);
+        set_movie = (EditText) findViewById(R.id.set_movie);
 /*
         set_movie = (EditText) findViewById(R.id.set_movie);
         set_theater = (EditText) findViewById(R.id.set_theater);
@@ -101,19 +88,7 @@ public class MyLostActivity extends AppCompatActivity {
         set_theater.setText(movieTheater + "관");
         set_time.setText(movieTime);
 */
-        /*
-        View.OnClickListener clickListener;
-        clickListener = new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                switch(v.getId()){
-                    case R.id.seatA1:
 
-                }
-            }
-        };
-
-        */
 
     }
 
@@ -202,13 +177,13 @@ public class MyLostActivity extends AppCompatActivity {
 
                 JSONObject item = jsonArray.getJSONObject(i);
 
-                LostId = item.getString(TAG_LOSTID);
+                String LostId = item.getString(TAG_LOSTID);
                 String TheaterId = item.getString(TAG_THEATERID) + "관";
                 String SeatNO = "A" + item.getString(TAG_SEATNO);
                 String DetTime = item.getString(TAG_DETTIME);
-                IsLost = item.getString(TAG_ISLOST);
+                String IsLost = item.getString(TAG_ISLOST);
 
-                if(IsLost.equals("0")){
+                if(IsLost.equals("1")){
                     IsLost = "X";
 
                 }
@@ -225,11 +200,37 @@ public class MyLostActivity extends AppCompatActivity {
                 mArrayList.add(hashMap);
             }
 
-            ListAdapter adapter = new SimpleAdapter(
+            SimpleAdapter adapter = new SimpleAdapter(
                     MyLostActivity.this, mArrayList, R.layout.item_list,
                     new String[]{TAG_LOSTID,TAG_THEATERID, TAG_SEATNO, TAG_DETTIME, TAG_ISLOST},
                     new int[]{R.id.textView_list_id, R.id.textView_list_theater, R.id.textView_list_seat, R.id.textView_list_detectTime, R.id.textView_list_isLost}
-            );
+            ){
+                @Override
+                public View getView (int position, View convertView, ViewGroup parent)
+                {
+                    View v = super.getView(position, convertView, parent);
+
+                    Button btn_list_Retrieve =(Button)v.findViewById(R.id.btn_list_Retrieve);
+                    TextView textView_list_id =(TextView) v.findViewById(R.id.textView_list_id);
+                    TextView textView_list_isLost =(TextView) v.findViewById(R.id.textView_list_isLost);
+                    btn_list_Retrieve.setOnClickListener(new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View arg0) {
+                            String ListLostId = textView_list_id.getText().toString();
+                            // TODO Auto-generated method stub
+                            if (textView_list_isLost.getText().toString().equals("O")){
+                                Toast.makeText(getApplicationContext(),"이미 회수된 분실물입니다.",Toast.LENGTH_SHORT).show();
+                            }
+                            else{
+                                set_theater.setText(ListLostId);
+                                retrieveLost(ListLostId);
+                            }
+                        }
+                    });
+                    return v;
+                }
+            };
 
             mlistView.setAdapter(adapter);
 
@@ -241,9 +242,7 @@ public class MyLostActivity extends AppCompatActivity {
     }
 
 
-
-/*
-    private void retrieveLost(){
+    private void retrieveLost(String LostId){
         Response.Listener<String> responseListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -251,14 +250,10 @@ public class MyLostActivity extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(response);
                     boolean success = jsonObject.getBoolean("success");
                     if (success) { // 회수 성공
-                        //IsLost = jsonObject.getString("IsLost");
-
                         Toast.makeText(getApplicationContext(),"분실물을 회수하였습니다.",Toast.LENGTH_SHORT).show();
-
                         Intent intent = new Intent(MyLostActivity.this, MyLostActivity.class);
-                        //intent.putExtra("customerId", IsLost);
                         startActivity(intent);
-                    } else { // 로그인에 실패한 경우
+                    } else { // 회수 실패
                         Toast.makeText(getApplicationContext(), "분실물 회수에 실패하였습니다.", Toast.LENGTH_SHORT).show();
                         return;
                     }
@@ -271,5 +266,5 @@ public class MyLostActivity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(MyLostActivity.this);
         queue.add(MyLostRequest);
     }
-*/
+
 }
