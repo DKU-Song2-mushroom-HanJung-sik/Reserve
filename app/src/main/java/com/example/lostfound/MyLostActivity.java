@@ -56,8 +56,8 @@ public class MyLostActivity extends AppCompatActivity {
     ListView mlistView;
     String mJsonString;
 
-    EditText set_theater;
-    EditText set_movie;
+    //EditText set_theater;
+    //EditText set_movie;
 
 
 
@@ -77,8 +77,8 @@ public class MyLostActivity extends AppCompatActivity {
 
 
 
-        set_theater = (EditText) findViewById(R.id.set_theater);
-        set_movie = (EditText) findViewById(R.id.set_movie);
+        //set_theater = (EditText) findViewById(R.id.set_theater);
+        //set_movie = (EditText) findViewById(R.id.set_movie);
 /*
         set_movie = (EditText) findViewById(R.id.set_movie);
         set_theater = (EditText) findViewById(R.id.set_theater);
@@ -223,7 +223,7 @@ public class MyLostActivity extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(),"이미 회수된 분실물입니다.",Toast.LENGTH_SHORT).show();
                             }
                             else{
-                                set_theater.setText(ListLostId);
+                                //set_theater.setText(ListLostId);
                                 retrieveLost(ListLostId);
                             }
                         }

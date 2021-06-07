@@ -31,7 +31,7 @@ public class MyReservationActivity extends AppCompatActivity {
 
 
     public String movieName;
-    public String theaId;
+    public String theaterId;
     public String seatNum;
     public String movieTime;
 
@@ -54,7 +54,7 @@ public class MyReservationActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         movieName = intent.getStringExtra("reserveMovie");
-        theaId = intent.getStringExtra("theaterId");
+        theaterId = intent.getStringExtra("theaterId");
         seatNum = intent.getStringExtra("seatNo");
         movieTime = intent.getStringExtra("reserveTime");
 
@@ -65,7 +65,7 @@ public class MyReservationActivity extends AppCompatActivity {
         reserveContact.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
 
         set_movie.setText(movieName);
-        set_theater.setText(theaId + "관");
+        set_theater.setText(theaterId + "관");
         set_seat.setText("A" + seatNum);
         set_time.setText(movieTime);
 
@@ -80,7 +80,7 @@ public class MyReservationActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MyReservationActivity.this, MypageActivity.class);
                 intent.putExtra("reserveMovie", movieName);
-                intent.putExtra("theaterId", theaId);
+                intent.putExtra("theaterId", theaterId);
                 intent.putExtra("seatNo", seatNum);
                 intent.putExtra("reserveTime", movieTime);
                 startActivity(intent);

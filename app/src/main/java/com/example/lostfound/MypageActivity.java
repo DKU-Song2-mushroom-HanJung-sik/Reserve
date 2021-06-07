@@ -18,7 +18,7 @@ public class MypageActivity extends AppCompatActivity {
 
     private Button reserveInfo, lostCheck;
     private EditText identity_name1, identity_name2, identity_id, identity_phone;
-    public String movieName, theaId, seatNum, movieTime;
+    public String movieName, theaterId, seatNum, movieTime;
 
     public String customerId = ((MainActivity)MainActivity.context_main).customerId;
     public String customerContact=((MainActivity)MainActivity.context_main).customerContact;
@@ -47,7 +47,7 @@ public class MypageActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         movieName = intent.getStringExtra("reserveMovie");
-        theaId = intent.getStringExtra("theaterId");
+        theaterId = intent.getStringExtra("theaterId");
         seatNum = intent.getStringExtra("seatNo");
         movieTime = intent.getStringExtra("reserveTime");
 
@@ -58,7 +58,7 @@ public class MypageActivity extends AppCompatActivity {
             public void onClick(View view){
                 Intent intent = new Intent(MypageActivity.this, MyReservationActivity.class);
                 intent.putExtra("reserveMovie", movieName);
-                intent.putExtra("theaterID", theaId);
+                intent.putExtra("theaterId", theaterId);
                 intent.putExtra("seatNo", seatNum);
                 intent.putExtra("reserveTime", movieTime);
                 startActivity(intent);

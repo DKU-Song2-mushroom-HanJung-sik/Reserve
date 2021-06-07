@@ -104,7 +104,6 @@ public class MainActivity extends AppCompatActivity {
                         JSONObject jsonObject = new JSONObject(response);
                         boolean success = jsonObject.getBoolean("success");
                         lostCnt = jsonObject.getString("lostCnt");
-                        Toast.makeText(getApplicationContext(),"데이터를 성공적으로 불러왔습니다!!."+lostCnt,Toast.LENGTH_SHORT).show();
                     } catch (JSONException e) {
 
                         e.printStackTrace();
