@@ -60,8 +60,8 @@ public class MyLostActivity extends AppCompatActivity {
     //EditText set_movie;
 
 
-    public String theaterId, seatNo;
-
+   // public String theaterId, seatNo;
+    public String customerId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,8 +70,9 @@ public class MyLostActivity extends AppCompatActivity {
 
 
         Intent intent = getIntent();
-        seatNo = intent.getStringExtra("seatNUM");
-        theaterId = intent.getStringExtra("theaterId");
+        customerId=intent.getStringExtra("customerId");
+       // seatNo = intent.getStringExtra("seatNUM");
+       // theaterId = intent.getStringExtra("theaterId");
         mlistView = (ListView) findViewById(R.id.listView_lost_list);
         mArrayList = new ArrayList<>();
 
@@ -156,7 +157,7 @@ public class MyLostActivity extends AppCompatActivity {
                 }
             }
         };
-        LostSeatRequest MyLostRequest = new LostSeatRequest(seatNo, theaterId, responseListener);
+        LostSeatRequest MyLostRequest = new LostSeatRequest(customerId, responseListener);
         RequestQueue queue = Volley.newRequestQueue(MyLostActivity.this);
         queue.add(MyLostRequest);
 
