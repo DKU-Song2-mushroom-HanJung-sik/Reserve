@@ -27,7 +27,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 
-import com.android.volley.Response;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
     public String customerName;
 
     public String lostCnt;
+
 
 
 
@@ -187,7 +188,15 @@ public class MainActivity extends AppCompatActivity {
         PendingIntent intent_notifyPending = PendingIntent.getActivity
                 (MainActivity.this, 0, intent_notify, PendingIntent.FLAG_UPDATE_CURRENT);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) { // 채널 만들기
+            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            NotificationChannel notificationChannel = new NotificationChannel("PRIMARY_CHANNEL_ID", "PRIMARY_CHANNEL", NotificationManager.IMPORTANCE_DEFAULT);
+            notificationChannel.setDescription("channel description");
+            notificationChannel.enableLights(true);
+            notificationChannel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+            notificationManager.createNotificationChannel(notificationChannel);
 
+        }
         NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, "PRIMARY_CHANNEL_ID")
                                             .setSmallIcon(R.mipmap.ic_launcher)
                                             .setContentTitle("분실물 " + lostCnt + "개가 탐지되었습니다!")  // 알림 제목

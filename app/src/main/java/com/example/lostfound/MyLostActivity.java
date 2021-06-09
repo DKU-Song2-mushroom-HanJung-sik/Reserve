@@ -60,7 +60,7 @@ public class MyLostActivity extends AppCompatActivity {
     //EditText set_movie;
 
 
-    public String theaterID, seatNUM;
+    public String theaterID, seatNo;
 
 
     @Override
@@ -70,37 +70,103 @@ public class MyLostActivity extends AppCompatActivity {
 
 
         Intent intent = getIntent();
-        seatNUM = intent.getStringExtra("seatNUM");
-
+        seatNo = intent.getStringExtra("seatNUM");
         mlistView = (ListView) findViewById(R.id.listView_lost_list);
         mArrayList = new ArrayList<>();
 
-        GetData task = new GetData();
+        // GetData task = new GetData();
+        // task.execute("http://220.149.236.71/loadDBtoJson.php");
 
-        task.execute("http://220.149.236.71/loadDBtoJson.php");
+        Response.Listener<String> responseListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    JSONArray jsonArray = jsonObject.getJSONArray(TAG_JSON);
+                    for(int i=0;i<jsonArray.length();i++){
+
+                        JSONObject item = jsonArray.getJSONObject(i);
+
+                        String LostId = item.getString(TAG_LOSTID);
+                        String TheaterId = item.getString(TAG_THEATERID) + "관";
+                        String SeatNO = "A" + item.getString(TAG_SEATNO);
+                        String DetTime = item.getString(TAG_DETTIME);
+                        String IsLost = item.getString(TAG_ISLOST);
+
+                        if(IsLost.equals("1")){
+                            IsLost = "X";
+
+                        }
+                        else{ IsLost = "O"; }
+
+
+                        HashMap<String, String> hashMap = new HashMap<>();
+
+                        hashMap.put(TAG_LOSTID, LostId);
+                        hashMap.put(TAG_THEATERID, TheaterId);
+                        hashMap.put(TAG_SEATNO, SeatNO);
+                        hashMap.put(TAG_DETTIME, DetTime);
+                        hashMap.put(TAG_ISLOST, IsLost);
+
+                        mArrayList.add(hashMap);
 
 
 
+                    }
 
-        //set_theater = (EditText) findViewById(R.id.set_theater);
-        //set_movie = (EditText) findViewById(R.id.set_movie);
-/*
-        set_movie = (EditText) findViewById(R.id.set_movie);
-        set_theater = (EditText) findViewById(R.id.set_theater);
-        set_time = (EditText) findViewById(R.id.set_time);
+                    SimpleAdapter adapter = new SimpleAdapter(
+                            MyLostActivity.this, mArrayList, R.layout.item_list,
+                            new String[]{TAG_LOSTID,TAG_THEATERID, TAG_SEATNO, TAG_DETTIME, TAG_ISLOST},
+                            new int[]{R.id.textView_list_id, R.id.textView_list_theater, R.id.textView_list_seat, R.id.textView_list_detectTime, R.id.textView_list_isLost}
+                    ){
+                        @Override
+                        public View getView (int position, View convertView, ViewGroup parent)
+                        {
+                            View v = super.getView(position, convertView, parent);
 
-        set_movie.setText(movieName);
-        set_theater.setText(movieTheater + "관");
-        set_time.setText(movieTime);
-*/
+                            Button btn_list_Retrieve =(Button)v.findViewById(R.id.btn_list_Retrieve);
+                            TextView textView_list_id =(TextView) v.findViewById(R.id.textView_list_id);
+                            TextView textView_list_isLost =(TextView) v.findViewById(R.id.textView_list_isLost);
+                            btn_list_Retrieve.setOnClickListener(new View.OnClickListener() {
+
+                                @Override
+                                public void onClick(View arg0) {
+                                    String ListLostId = textView_list_id.getText().toString();
+                                    // TODO Auto-generated method stub
+                                    if (textView_list_isLost.getText().toString().equals("O")){
+                                        Toast.makeText(getApplicationContext(),"이미 회수된 분실물입니다.",Toast.LENGTH_SHORT).show();
+                                    }
+                                    else{
+                                        //set_theater.setText(ListLostId);
+                                        retrieveLost(ListLostId);
+                                    }
+                                }
+                            });
+                            return v;
+                        }
+                    };
+
+                    mlistView.setAdapter(adapter);
+
+
+
+                } catch (JSONException e) {
+                    Log.d(TAG, "showResult : ", e);
+                }
+            }
+        };
+        LostSeatRequest MyLostRequest = new LostSeatRequest(seatNo, responseListener);
+        RequestQueue queue = Volley.newRequestQueue(MyLostActivity.this);
+        queue.add(MyLostRequest);
 
 
     }
-
+/*
     private class GetData extends AsyncTask<String, Void, String>{
         ProgressDialog progressDialog;
         String errorString = null;
 
+        // 백그라운드 스레드를 실행하기전 준비 단계, 변수의 초기화나 네트워크 통신전 셋팅해야 할 것들을 메서드 공간에 작성
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -110,6 +176,7 @@ public class MyLostActivity extends AppCompatActivity {
         }
 
 
+        // background 스레드가 일을 마치고 리턴값으로 result 넘겨줌
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
@@ -130,6 +197,7 @@ public class MyLostActivity extends AppCompatActivity {
         }
 
 
+        // background 스레드로 일처리를 해주는 곳, 네트워크, 병행일처리 등을 작성
         @Override
         protected String doInBackground(String... params) {
             String serverURL = params[0];
@@ -172,6 +240,7 @@ public class MyLostActivity extends AppCompatActivity {
             }
         }
     }
+*/
 
     private void showResult(){
         try {
@@ -194,17 +263,19 @@ public class MyLostActivity extends AppCompatActivity {
                 }
                 else{ IsLost = "O"; }
 
-    //            if(SeatNO == ("A"+seatNUM) ) {
-                    HashMap<String, String> hashMap = new HashMap<>();
 
-                    hashMap.put(TAG_LOSTID, LostId);
-                    hashMap.put(TAG_THEATERID, TheaterId);
-                    hashMap.put(TAG_SEATNO, SeatNO);
-                    hashMap.put(TAG_DETTIME, DetTime);
-                    hashMap.put(TAG_ISLOST, IsLost);
+                HashMap<String, String> hashMap = new HashMap<>();
 
-                    mArrayList.add(hashMap);
-    //            }
+                hashMap.put(TAG_LOSTID, LostId);
+                hashMap.put(TAG_THEATERID, TheaterId);
+                hashMap.put(TAG_SEATNO, SeatNO);
+                hashMap.put(TAG_DETTIME, DetTime);
+                hashMap.put(TAG_ISLOST, IsLost);
+
+                mArrayList.add(hashMap);
+
+
+
             }
 
             SimpleAdapter adapter = new SimpleAdapter(
