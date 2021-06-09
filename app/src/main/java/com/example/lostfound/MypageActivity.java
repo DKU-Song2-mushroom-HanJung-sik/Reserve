@@ -72,6 +72,7 @@ public class MypageActivity extends AppCompatActivity {
             public void onClick(View view){
                 Intent intent = new Intent(MypageActivity.this, MyLostActivity.class);
                 intent.putExtra("seatNUM", seatNum);
+                intent.putExtra("theaterId", theaterId);
                 startActivity(intent);
             }
         });

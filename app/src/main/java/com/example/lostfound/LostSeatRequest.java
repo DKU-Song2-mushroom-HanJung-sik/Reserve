@@ -12,12 +12,12 @@ public class LostSeatRequest extends StringRequest {
     final static private String URL = "http://172.23.14.54/loadDBtoJson.php";
     private Map<String, String> map;
 
-    public LostSeatRequest(String seatNo, Response.Listener<String> listener) {
+    public LostSeatRequest(String seatNo, String theaterId, Response.Listener<String> listener) {
         super(Method.POST, URL, listener, null);
 
         map = new HashMap<>();
         map.put("seatNo",seatNo);
-
+        map.put("theaterId",theaterId);
     }
     @Override
     protected Map<String, String> getParams() throws AuthFailureError {

@@ -60,7 +60,7 @@ public class MyLostActivity extends AppCompatActivity {
     //EditText set_movie;
 
 
-    public String theaterID, seatNo;
+    public String theaterId, seatNo;
 
 
     @Override
@@ -71,6 +71,7 @@ public class MyLostActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         seatNo = intent.getStringExtra("seatNUM");
+        theaterId = intent.getStringExtra("theaterId");
         mlistView = (ListView) findViewById(R.id.listView_lost_list);
         mArrayList = new ArrayList<>();
 
@@ -155,7 +156,7 @@ public class MyLostActivity extends AppCompatActivity {
                 }
             }
         };
-        LostSeatRequest MyLostRequest = new LostSeatRequest(seatNo, responseListener);
+        LostSeatRequest MyLostRequest = new LostSeatRequest(seatNo, theaterId, responseListener);
         RequestQueue queue = Volley.newRequestQueue(MyLostActivity.this);
         queue.add(MyLostRequest);
 
