@@ -60,7 +60,7 @@ public class MyLostActivity extends AppCompatActivity {
     //EditText set_movie;
 
 
-
+    public String theaterID, seatNUM;
 
 
     @Override
@@ -68,10 +68,15 @@ public class MyLostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_lost);
 
+
+        Intent intent = getIntent();
+        seatNUM = intent.getStringExtra("seatNUM");
+
         mlistView = (ListView) findViewById(R.id.listView_lost_list);
         mArrayList = new ArrayList<>();
 
         GetData task = new GetData();
+
         task.execute("http://220.149.236.71/loadDBtoJson.php");
 
 
@@ -189,15 +194,17 @@ public class MyLostActivity extends AppCompatActivity {
                 }
                 else{ IsLost = "O"; }
 
-                HashMap<String,String> hashMap = new HashMap<>();
+    //            if(SeatNO == ("A"+seatNUM) ) {
+                    HashMap<String, String> hashMap = new HashMap<>();
 
-                hashMap.put(TAG_LOSTID, LostId);
-                hashMap.put(TAG_THEATERID, TheaterId);
-                hashMap.put(TAG_SEATNO, SeatNO);
-                hashMap.put(TAG_DETTIME, DetTime);
-                hashMap.put(TAG_ISLOST, IsLost);
+                    hashMap.put(TAG_LOSTID, LostId);
+                    hashMap.put(TAG_THEATERID, TheaterId);
+                    hashMap.put(TAG_SEATNO, SeatNO);
+                    hashMap.put(TAG_DETTIME, DetTime);
+                    hashMap.put(TAG_ISLOST, IsLost);
 
-                mArrayList.add(hashMap);
+                    mArrayList.add(hashMap);
+    //            }
             }
 
             SimpleAdapter adapter = new SimpleAdapter(
