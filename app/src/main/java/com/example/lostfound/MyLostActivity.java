@@ -54,7 +54,7 @@ public class MyLostActivity extends AppCompatActivity {
 
     ArrayList<HashMap<String, String>> mArrayList;
     ListView mlistView;
-    String mJsonString;
+    //String mJsonString;
 
     //EditText set_theater;
     //EditText set_movie;
@@ -69,8 +69,9 @@ public class MyLostActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_lost);
 
 
-        Intent intent = getIntent();
-        seatNo = intent.getStringExtra("seatNUM");
+        //Intent intent = getIntent();
+        //seatNo = intent.getStringExtra("seatNUM");
+        String customerId = ((MainActivity)MainActivity.context_main).customerId;
         mlistView = (ListView) findViewById(R.id.listView_lost_list);
         mArrayList = new ArrayList<>();
 
@@ -109,9 +110,6 @@ public class MyLostActivity extends AppCompatActivity {
                         hashMap.put(TAG_ISLOST, IsLost);
 
                         mArrayList.add(hashMap);
-
-
-
                     }
 
                     SimpleAdapter adapter = new SimpleAdapter(
@@ -155,12 +153,11 @@ public class MyLostActivity extends AppCompatActivity {
                 }
             }
         };
-        LostSeatRequest MyLostRequest = new LostSeatRequest(seatNo, responseListener);
+        LostSeatRequest MyLostRequest = new LostSeatRequest(customerId, responseListener);
         RequestQueue queue = Volley.newRequestQueue(MyLostActivity.this);
         queue.add(MyLostRequest);
-
-
     }
+
 /*
     private class GetData extends AsyncTask<String, Void, String>{
         ProgressDialog progressDialog;
@@ -240,7 +237,7 @@ public class MyLostActivity extends AppCompatActivity {
             }
         }
     }
-*/
+
 
     private void showResult(){
         try {
@@ -319,7 +316,7 @@ public class MyLostActivity extends AppCompatActivity {
         }
     }
 
-
+*/
     private void retrieveLost(String LostId){
         Response.Listener<String> responseListener = new Response.Listener<String>() {
             @Override

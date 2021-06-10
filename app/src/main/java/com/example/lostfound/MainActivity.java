@@ -91,13 +91,9 @@ public class MainActivity extends AppCompatActivity {
         customerId = intent.getStringExtra("customerId");
         customerContact = intent.getStringExtra("customerContact");
         customerName = intent.getStringExtra("customerName");
-        //customerName = intent.getStringExtra("IsLost");
 
-
-
+        //로그인 성공했다면
         if (customerName != null && customerContact != null){
-
-
             Response.Listener<String> responseListener = new Response.Listener<String>(){
                 @Override
                 public void onResponse(String response) {
@@ -111,7 +107,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             };
-            MainRequest mainRequest = new MainRequest(responseListener);
+
+            MainRequest mainRequest = new MainRequest(customerId, responseListener);
             RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
             queue.add(mainRequest);
 
@@ -125,7 +122,6 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     //IsLost = ((MyLostActivity)MyLostActivity.context_main).textView_list_isLost;
-
                     createNotification();
                 }
             };

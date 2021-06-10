@@ -12,12 +12,13 @@ public class MainRequest extends StringRequest {
     final static private String URL = "http://220.149.236.71/lostDetect.php";
     private Map<String, String> map;
 
-    public MainRequest(Response.Listener<String> listener) {
+    public MainRequest(String customerId, Response.Listener<String> listener) {
         super(Method.POST, URL, listener, null);
 
         map = new HashMap<>();
-
+        map.put("customerId", customerId);
     }
+
     @Override
     protected Map<String, String> getParams() throws AuthFailureError {
         return map;
