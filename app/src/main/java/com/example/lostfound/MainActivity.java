@@ -124,7 +124,9 @@ public class MainActivity extends AppCompatActivity {
                 // TimerTask 추상 클래스를 선언하자마자 run()을 강제로 정의하도록 함
                 @Override
                 public void run() {
-                    createNotification(lostCnt);
+                    System.out.println(lostCnt);
+                    if(lostCnt != null && !lostCnt.equals("0"))
+                        createNotification();
                 }
             };
 
@@ -179,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // 알림 및 내용 설정
-    private void createNotification(String lostCnt) {
+    private void createNotification() {
         // Notification을 클릭했을 때 MyLostActivity를 시작할 수 있는 Implicit Intent 생성
         Intent intent_notify = new Intent(MainActivity.this, MyLostActivity.class);
         // Noitification을 감싸주고 전달해주는 PendingIntent 정의
