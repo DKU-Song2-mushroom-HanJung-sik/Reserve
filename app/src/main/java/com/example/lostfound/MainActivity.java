@@ -41,7 +41,7 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 import android.graphics.BitmapFactory;
-
+import android.graphics.Color;
 import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
@@ -100,9 +100,12 @@ public class MainActivity extends AppCompatActivity {
                     try {
                         JSONObject jsonObject = new JSONObject(response);
                         boolean success = jsonObject.getBoolean("success");
-                        lostCnt = jsonObject.getString("lostCnt");
-                    } catch (JSONException e) {
+                        if(success) {
 
+                            lostCnt = jsonObject.getString("lostCnt");
+
+                        }
+                    } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
@@ -121,8 +124,7 @@ public class MainActivity extends AppCompatActivity {
                 // TimerTask 추상 클래스를 선언하자마자 run()을 강제로 정의하도록 함
                 @Override
                 public void run() {
-                    //IsLost = ((MyLostActivity)MyLostActivity.context_main).textView_list_isLost;
-                    createNotification();
+                    createNotification(lostCnt);
                 }
             };
 
@@ -177,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // 알림 및 내용 설정
-    private void createNotification() {
+    private void createNotification(String lostCnt) {
         // Notification을 클릭했을 때 MyLostActivity를 시작할 수 있는 Implicit Intent 생성
         Intent intent_notify = new Intent(MainActivity.this, MyLostActivity.class);
         // Noitification을 감싸주고 전달해주는 PendingIntent 정의
@@ -189,11 +191,13 @@ public class MainActivity extends AppCompatActivity {
             NotificationChannel notificationChannel = new NotificationChannel("PRIMARY_CHANNEL_ID", "PRIMARY_CHANNEL", NotificationManager.IMPORTANCE_DEFAULT);
             notificationChannel.setDescription("channel description");
             notificationChannel.enableLights(true);
+            notificationChannel.setLightColor(Color.GREEN);
             notificationChannel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
             notificationManager.createNotificationChannel(notificationChannel);
 
         }
         NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, "PRIMARY_CHANNEL_ID")
+                                            .setChannelId("PRIMARY_CHANNEL_ID")
                                             .setSmallIcon(R.mipmap.ic_launcher)
                                             .setContentTitle("분실물 " + lostCnt + "개가 탐지되었습니다!")  // 알림 제목
                                             .setContentText("Dankook Cinema [나의시네마>분실물확인]에서 체크하세요!")    // 알림 세부 텍스트
@@ -204,7 +208,7 @@ public class MainActivity extends AppCompatActivity {
         // 알림 표시, 알림을 표시하려면 NotificationManage.notify()를 호출하고 고유id와 결과를 호출결과에 전하면 됨.
         NotificationManager notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            notificationManager.createNotificationChannel(new NotificationChannel("default", "기본 채널", NotificationManager.IMPORTANCE_DEFAULT));
+            notificationManager.createNotificationChannel(new NotificationChannel("PRIMARY_CHANNEL_ID", "PRIMARY_CHANNEL", NotificationManager.IMPORTANCE_DEFAULT));
         }
 
         // id값은
