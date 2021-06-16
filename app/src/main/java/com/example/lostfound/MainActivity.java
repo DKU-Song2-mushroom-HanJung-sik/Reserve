@@ -94,37 +94,37 @@ public class MainActivity extends AppCompatActivity {
 
         //로그인 성공했다면
         if (customerName != null && customerContact != null){
-            Response.Listener<String> responseListener = new Response.Listener<String>(){
-                @Override
-                public void onResponse(String response) {
-                    try {
-                        JSONObject jsonObject = new JSONObject(response);
-                        boolean success = jsonObject.getBoolean("success");
-                        if(success) {
-
-                            lostCnt = jsonObject.getString("lostCnt");
-
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            };
-
-            MainRequest mainRequest = new MainRequest(customerId, responseListener);
-            RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
-            queue.add(mainRequest);
 
             identity_name.setText(customerName + " 님, 안녕하세요!");
             identity_contact.setText("(H.P : " + customerContact + ")");
             identity_name.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11);
             identity_contact.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11);
-
             TimerTask tt = new TimerTask() {
                 // TimerTask 추상 클래스를 선언하자마자 run()을 강제로 정의하도록 함
                 @Override
                 public void run() {
-                    System.out.println(lostCnt);
+
+
+                    Response.Listener<String> responseListener = new Response.Listener<String>(){
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                boolean success = jsonObject.getBoolean("success");
+                                if(success) {
+
+                                    lostCnt = jsonObject.getString("lostCnt");
+
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    };
+                    MainRequest mainRequest = new MainRequest(customerId, responseListener);
+                    RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
+                    queue.add(mainRequest);
+
                     if(lostCnt != null && !lostCnt.equals("0"))
                         createNotification();
                 }
